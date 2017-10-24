@@ -13,32 +13,27 @@ import java.io.FileNotFoundException;
 public class Arquivo {
         
     public String caminhoArestas, caminhoVertices;
-    public BufferedReader BufferArestas, BufferVertices;
-    public int QntdArestas, QntdVertices;
 
-    
-    public int ContarLinhas (BufferedReader Texto) throws IOException{
-        int lines = 0;
-        
-        while (Texto.readLine() != null){
-            lines++;
-        }
-            
-        return lines;
+
+    public Arquivo(String caminhoArestas, String caminhoVertices) {
+        this.caminhoArestas = caminhoArestas;
+        this.caminhoVertices = caminhoVertices;
+
     }
     
-    public BufferedReader InicializarArquivo(String caminho) throws FileNotFoundException{
-        FileReader la = new FileReader(caminho);
-        BufferedReader Texto = new BufferedReader(la);
+    public String[] InicializarArquivo(String caminho, int linhasArquivo) throws IOException{
+        String[] vetorPreenchido;
         
-        return Texto;
+        FileReader arquivoInicial = new FileReader(caminho);
         
-        
-    }           
-        int NumArestas = 1919;
-        int NumVertices = 41161;
-        
-        String[] VetorArestas = new String[NumArestas];
-        
+        try (BufferedReader LeitorTxt = new BufferedReader(arquivoInicial)) {
+            vetorPreenchido = new String[linhasArquivo];
+            
+            for(int i=0; i<linhasArquivo; i++){
+                vetorPreenchido[i] = LeitorTxt.readLine();
+            }
+        }
+        return vetorPreenchido;        
+    }                   
         
 }
