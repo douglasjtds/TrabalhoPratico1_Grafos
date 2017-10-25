@@ -7,6 +7,10 @@ package tp1_grafos;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.SingleGraph;
 
 /**
  *
@@ -54,7 +58,6 @@ public class TP1_Grafos {
 //            System.out.println("Arquivo não pôde ser lido.");
 //        }
  
-
            String EdgePath = "TrabalhoPratico1_Grafos\\ArestasFacebook_20171010214533.txt";
            String VertexPath = "TrabalhoPratico1_Grafos\\VerticesFacebook_20171010214551.txt";
            

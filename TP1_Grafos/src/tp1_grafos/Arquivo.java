@@ -13,12 +13,11 @@ import java.io.FileNotFoundException;
 public class Arquivo {
         
     public String caminhoArestas, caminhoVertices;
-
+    
 
     public Arquivo(String caminhoArestas, String caminhoVertices) {
         this.caminhoArestas = caminhoArestas;
         this.caminhoVertices = caminhoVertices;
-
     }
     
     public String[] InicializarArquivo(String caminho, int linhasArquivo) throws IOException{
@@ -32,8 +31,11 @@ public class Arquivo {
             for(int i=0; i<linhasArquivo; i++){
                 vetorPreenchido[i] = LeitorTxt.readLine();
             }
+//        } catch () {
+//            
         }
-        return vetorPreenchido;        
-    }                   
         
-}
+        
+        return vetorPreenchido;        
+        }                   
+    }
