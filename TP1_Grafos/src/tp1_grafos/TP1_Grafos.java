@@ -63,7 +63,7 @@ public class TP1_Grafos {
            
            int qntdArestas = 41161;
            int qntdVertices = 1919;
-            Arquivo teste = new Arquivo(EdgePath, VertexPath);
+           Arquivo teste = new Arquivo(EdgePath, VertexPath);
             
 //            teste.InicializarArquivo(EdgePath, qntdArestas);      ERRO DE TRY CATCH
 //            teste.InicializarArquivo(VertexPath, qntdVertices);   ERRO DE TRY CATCH
