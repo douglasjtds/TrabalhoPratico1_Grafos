@@ -3,6 +3,7 @@ package tp1_grafos;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.graphstream.graph.Graph;
@@ -17,7 +18,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 public class TP1_Grafos {
     
-    public static String[] InicializarArquivo(String caminho, int linhasArquivo) throws IOException{
+    public static String[] InicializarArquivo(File caminho, int linhasArquivo) throws IOException{
         
         String[] vetorPreenchido = new String[linhasArquivo];
 
@@ -48,20 +49,27 @@ public class TP1_Grafos {
         
         public static void main(String[] args) {
             
-            Path EdgePath = Paths.get("C:\\Users\\mathe\\Documents\\DOCUMENTS\\FACULDADE\\GitHub\\TrabalhoPratico1_Grafos\\ArestasFacebook_20171010214533.txt");
-            Path VertexPath = Paths.get("C:\\Users\\mathe\\Documents\\DOCUMENTS\\FACULDADE\\GitHub\\TrabalhoPratico1_Grafos\\VerticesFacebook_20171010214551.txt");         
-            
-            String CaminhoAresta = EdgePath.toString();
-            String CaminhoVertice = VertexPath.toString();
+            ClassLoader clA = getClass().getClassLoader();
+            File fileArestas = new File(clA.getResource("/ArestasFacebook_20171010214533.txt").getFile());
 
+            ClassLoader clV = getClass().getClassLoader();
+            File fileVertices = new File(clV.getResource("/VerticesFacebook_20171010214551.txt").getFile()); 
+
+            
+//            Path EdgePath = Paths.get("ArestasFacebook_20171010214533.txt");
+//            Path VertexPath = Paths.get("VerticesFacebook_20171010214551.txt");         
+//            
+//            String CaminhoAresta = EdgePath.toString();
+//            String CaminhoVertice = VertexPath.toString();
+            
             int qntdArestas = 41161;
             int qntdVertices = 1919;
             
             String[] vetorArestas = null, vetorVertices = null;
             
                 try {
-                   vetorArestas = InicializarArquivo(CaminhoAresta, qntdArestas);
-                   vetorVertices = InicializarArquivo(CaminhoVertice, qntdVertices);
+                   vetorArestas = InicializarArquivo(fileArestas, qntdArestas);
+                   vetorVertices = InicializarArquivo(fileVertices, qntdVertices);
 
 //                      PRINTA OS VETORES DE ARESTAS E DE VERTICES
 //                   
