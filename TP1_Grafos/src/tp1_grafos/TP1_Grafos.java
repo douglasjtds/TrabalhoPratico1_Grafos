@@ -18,27 +18,22 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 public class TP1_Grafos {
     
-<<<<<<< HEAD
     public static String[] InicializarArquivo(File caminho, int linhasArquivo) throws IOException{
         
         String[] vetorPreenchido = new String[linhasArquivo];
-=======
-        public static String[] InicializarArquivo(String caminho, int linhasArquivo) throws IOException{
-            String[] vetorPreenchido = new String[linhasArquivo];
->>>>>>> parent of 946168f... Plotando o grafo
 
-            FileReader arquivoInicial = new FileReader(caminho);
-            BufferedReader LeitorTxt = new BufferedReader(arquivoInicial);
+        FileReader arquivoInicial = new FileReader(caminho);
+        BufferedReader LeitorTxt = new BufferedReader(arquivoInicial);
 
-                for(int i=0; i<linhasArquivo; i++){
-                    vetorPreenchido[i] = LeitorTxt.readLine();
-                }
-
-            arquivoInicial.close();
-            return vetorPreenchido;        
+        for (int i = 0; i < linhasArquivo; i++) {
+            vetorPreenchido[i] = LeitorTxt.readLine();
         }
 
-        //      POSSÍVEL CLASSE PRA CONTAR QUANTAS LINHAS TEM O FILE.TXT. TEM QUE MEXER.
+        arquivoInicial.close();
+        return vetorPreenchido;      
+    }
+
+        //      POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
         //    
         //    public int qntdLinhas(String arquivoPath) throws IOException{
         //        
@@ -70,25 +65,58 @@ public class TP1_Grafos {
             int qntdArestas = 41161;
             int qntdVertices = 1919;
             
-            String[] vetorArestas, vetorVertices;
+            String[] vetorArestas = null, vetorVertices = null;
             
                 try {
                    vetorArestas = InicializarArquivo(fileArestas, qntdArestas);
                    vetorVertices = InicializarArquivo(fileVertices, qntdVertices);
 
-                    for (int i=0; i<qntdVertices; i++){
-                       System.out.println(vetorVertices[i]);
-                    }    
-
-                    System.out.println("\n\n\n");
-
-                    for (int i=0; i<qntdArestas; i++){
-                       System.out.println(vetorArestas[i]);
-                    } 
+//                      PRINTA OS VETORES DE ARESTAS E DE VERTICES
+//                   
+////                    for (int i=0; i<qntdVertices; i++){
+////                       System.out.println(vetorVertices[i]);
+////                    }    
+////
+////                    System.out.println("\n\n\n");
+////
+////                    for (int i=0; i<qntdArestas; i++){
+////                       System.out.println(vetorArestas[i]);
+////                    } 
                 }
                 catch (IOException arq){
                     System.out.println(arq.getMessage());
                 }
+                
+                
+                Graph FaceGraph = new SingleGraph("Facebook Graph");    //Criei o grafo
+                
+                for(int i=0; i<qntdVertices; i++){      //Inseri os vértices
+                    FaceGraph.addNode(vetorVertices[i]);
+                }
+                
+//                PRINTA OS NODES PRA CONFERIR SE FORAM INSERIDOS
+//                
+//                for(Node n : FaceGraph.getEachNode()){
+//                    System.out.println(n.getId());
+//                }
+
+                for(int i=0; i<qntdArestas; i++){       //Inseri arestas
+                    String[] parts = vetorArestas[i].split(";");
+                    String parte1 = parts[0];
+                    String parte2 = parts[1];
+                    
+                    FaceGraph.addEdge(vetorArestas[i], parte1, parte2, false);
+                }
+
+//                PRINTA AS ARESTAS PRA CONFERIR SE FORAM INSERIDAS
+//                
+//                for (Edge e : FaceGraph.getEachEdge()) {
+//                    System.out.println(e.getId());
+//                }
             
+                    System.setProperty("org.graphstream.ui.renderer",
+                    "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+                    
+                    FaceGraph.display();        //Plotou o grafo
         }
 }
