@@ -48,8 +48,8 @@ public class TP1_Grafos {
         
         public static void main(String[] args) {
             
-            Path EdgePath = Paths.get("C:\\Users\\mathe\\Documents\\DOCUMENTS\\FACULDADE\\GitHub\\TrabalhoPratico1_Grafos\\ArestasFacebook_20171010214533.txt");
-            Path VertexPath = Paths.get("C:\\Users\\mathe\\Documents\\DOCUMENTS\\FACULDADE\\GitHub\\TrabalhoPratico1_Grafos\\VerticesFacebook_20171010214551.txt");         
+            Path EdgePath = Paths.get("src\\ArestasFacebook_20171010214533.txt");
+            Path VertexPath = Paths.get("src\\VerticesFacebook_20171010214551.txt");         
             
             String CaminhoAresta = EdgePath.toString();
             String CaminhoVertice = VertexPath.toString();
