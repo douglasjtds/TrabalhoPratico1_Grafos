@@ -7,7 +7,7 @@ package tp1_grafos;
 
 /**
  *
- * @author douglasjtds
+ * @author douglasjtds & yMetsBLESS
  */
 public class BuscaEmProfundidade {
     

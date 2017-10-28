@@ -76,7 +76,7 @@ public class TP1_Grafos {
 ////                    } 
                 }
                 catch (IOException arq){
-                    System.out.println(arq.getMessage());
+                    System.out.println("ERRO AQUI Ó: " + arq.getMessage());
                 }
                 
                 
