@@ -10,6 +10,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import java.util.Stack;
 
 /**
  *
@@ -33,18 +34,40 @@ public class TP1_Grafos {
         return vetorPreenchido;      
     }
     
-    public static Graph BuscaProf(Graph G){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
+ 
+    public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
+        Stack<Node> pilhadeNós = new Stack<>();
         
-        for(Node Nó : G.getEachNode()){         //FOR EACH PARA PERCORRER TODO OS NÓS DO GRAFO
+        Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
+        pilhadeNós.push(Nó);        //ADICIONA O NÓ NA PILHA
         
             Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
                 while (nodesAdj.hasNext()) {        //ENQUANTO TIVER NÓS ADJACENTES...
-                Node ndAdj = nodesAdj.next();       //A VARIÁVEL Node VAI RECEBENDO OS ADJACENTES DESSE NÓ
-                
-                //AQUI VEM TODO O CÓDIGO COM PILHA, FUNÇÃO VISITA, ETC
+                    Node ndAdj = nodesAdj.next();       //A VARIÁVEL NdAdj VAI RECEBENDO OS ADJACENTES DESSE NÓ
+                    
+                    if(ndAdj.hasAttribute("NaoVisitado")){      //SE ELE AINDA NÃO FOI VISITADO
+                        
+                        //MARCA A ARESTA ENTRE O NÓ PASSADO COMO O ARGUMENTO DA FUNÇÃO E O ndAdj
+                        BuscaProf(ndAdj);
+                        
+                    }
+                }
+        Nó.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
+    }
+
+    
+    
+    public static void Busca(Graph G){
+        
+        for(Node n : G.getEachNode()){     //NÃO SEI SE REALMENTE PRECISA DESSE FOREACH, MAS TO SEGUINDO O SLIDE DA JAQUELINE
+            n.setAttribute("NaoVisitado"); //MARCAR CADA NÓ COMO NÃO VISITADO(TENTANDO ESSE MÉTODO, NÃO SEI SE VAI DAR CERTO) MARCANDO COM A "COR BRANCA"
+        }
+        
+        for(Node n : G.getEachNode()){ 
+            if(n.hasAttribute("NaoVisitado")){
+                BuscaProf(n);
             }
         }
-        return G;
     }
 
         //      POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
