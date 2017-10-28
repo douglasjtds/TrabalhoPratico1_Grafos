@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
@@ -30,6 +31,20 @@ public class TP1_Grafos {
 
         arquivoInicial.close();
         return vetorPreenchido;      
+    }
+    
+    public static Graph BuscaProf(Graph G){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
+        
+        for(Node Nó : G.getEachNode()){         //FOR EACH PARA PERCORRER TODO OS NÓS DO GRAFO
+        
+            Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
+                while (nodesAdj.hasNext()) {        //ENQUANTO TIVER NÓS ADJACENTES...
+                Node ndAdj = nodesAdj.next();       //A VARIÁVEL Node VAI RECEBENDO OS ADJACENTES DESSE NÓ
+                
+                //AQUI VEM TODO O CÓDIGO COM PILHA, FUNÇÃO VISITA, ETC
+            }
+        }
+        return G;
     }
 
         //      POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
@@ -110,5 +125,7 @@ public class TP1_Grafos {
                     "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
                     
                     FaceGraph.display();        //Plotou o grafo
+                    
+                    /*FaceGraph*/
         }
 }
