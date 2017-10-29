@@ -31,12 +31,12 @@ public class TP1_Grafos {
         }
 
         arquivoInicial.close();
-        return vetorPreenchido;      
+        return vetorPreenchido;    
     }
     
  
     public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
-        Stack<Node> pilhadeNós = new Stack<>();
+        Stack<Node> pilhadeNós = new Stack<>(); ////não lembrava desse stack... 
         
         Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
         pilhadeNós.push(Nó);        //ADICIONA O NÓ NA PILHA
@@ -64,7 +64,7 @@ public class TP1_Grafos {
         }
         
         for(Node n : G.getEachNode()){ 
-            if(n.hasAttribute("NaoVisitado")){
+            if(n.hasAttribute("NaoVisitado")){ //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
                 BuscaProf(n);
             }
         }
