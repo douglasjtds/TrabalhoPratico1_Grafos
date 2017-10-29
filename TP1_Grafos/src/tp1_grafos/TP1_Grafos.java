@@ -59,7 +59,7 @@ public class TP1_Grafos {
     
     public static void Busca(Graph G){
         
-        for(Node n : G.getEachNode()){     //NÃO SEI SE REALMENTE PRECISA DESSE FOREACH, MAS TO SEGUINDO O SLIDE DA JAQUELINE
+        for(Node n : G.getEachNode()){     //NÃO SEI SE REALMENTE PRECISA DESSE FOREACH, MAS TO SEGUINDO O SLIDE DA JAQUELINE //kkkkk to vendo...
             n.setAttribute("NaoVisitado"); //MARCAR CADA NÓ COMO NÃO VISITADO(TENTANDO ESSE MÉTODO, NÃO SEI SE VAI DAR CERTO) MARCANDO COM A "COR BRANCA"
         }
         
@@ -70,20 +70,20 @@ public class TP1_Grafos {
         }
     }
 
-        //      POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
-        //    
-        //    public int qntdLinhas(String arquivoPath) throws IOException{
-        //        
-        //        BufferedReader reader = new BufferedReader(new FileReader(arquivoPath));
-        //            int lines = 0;
-        //                while (reader.readLine() != null){
-        //                    lines++;
-        //                }
-        //            reader.close();
-        //            
-        //            return lines;
-        //    } 
-        
+////              POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
+//            //não sei se entendi muito pra que esse método...
+//            public int qntdLinhas(String arquivoPath) throws IOException{
+//                
+//                BufferedReader reader = new BufferedReader(new FileReader(arquivoPath));
+//                    int lines = 0;
+//                        while (reader.readLine() != null){
+//                            lines++;
+//                        }
+//                    reader.close();
+//                    
+//                    return lines;
+//            } 
+//        
         public static void main(String[] args) {
             
             Path EdgePath = Paths.get("src\\ArestasFacebook_20171010214533.txt");
