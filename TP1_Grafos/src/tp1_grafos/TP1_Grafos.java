@@ -36,31 +36,39 @@ public class TP1_Grafos {
     
  
     public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
-        Stack<Node> pilhadeNós = new Stack<>(); ////não lembrava desse stack... 
+        Stack<Node> pilhadeNós = new Stack<>(); 
+        int contador = 0;
         
         Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
-        pilhadeNós.push(Nó);        //ADICIONA O NÓ NA PILHA
+        Nó.addAttribute("ui.color", "grey");
+        pilhadeNós.push(Nó);                        //ADICIONA O NÓ NA PILHA
         
             Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
-                while (nodesAdj.hasNext()) {        //ENQUANTO TIVER NÓS ADJACENTES...
-                    Node ndAdj = nodesAdj.next();       //A VARIÁVEL NdAdj VAI RECEBENDO OS ADJACENTES DESSE NÓ
+                
+                while (nodesAdj.hasNext()) {                            //ENQUANTO TIVER NÓS ADJACENTES...
+                    Node ndAdj = nodesAdj.next();                       //A VARIÁVEL NdAdj VAI RECEBENDO OS ADJACENTES DESSE NÓ
                     
-                    if(ndAdj.hasAttribute("NaoVisitado")){      //SE ELE AINDA NÃO FOI VISITADO
-                        
-                        //MARCA A ARESTA ENTRE O NÓ PASSADO COMO O ARGUMENTO DA FUNÇÃO E O ndAdj
+                    if(ndAdj.hasAttribute("NaoVisitado")){          //SE ELE AINDA NÃO FOI VISITADO
+                        ndAdj.getEdgeBetween(Nó).setAttribute("Visitada");
+                        ndAdj.addAttribute("ui.color", "green");    //ARESTA VISITADA
                         BuscaProf(ndAdj);
                         
                     }
+                    pilhadeNós.pop();
                 }
         Nó.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
+        Nó.addAttribute("ui.color", "purple");  //COMO ELE JÁ TÁ PRETO, DEIXEI COMO ROXO
     }
 
+//    public static void BuscaLargura(){        //FUNÇÃO BUSCA EM LARGURA
+//    }
     
     
     public static void Busca(Graph G){
         
-        for(Node n : G.getEachNode()){     //NÃO SEI SE REALMENTE PRECISA DESSE FOREACH, MAS TO SEGUINDO O SLIDE DA JAQUELINE //kkkkk to vendo...
-            n.setAttribute("NaoVisitado"); //MARCAR CADA NÓ COMO NÃO VISITADO(TENTANDO ESSE MÉTODO, NÃO SEI SE VAI DAR CERTO) MARCANDO COM A "COR BRANCA"
+        for(Node n : G.getEachNode()){     
+            n.setAttribute("NaoVisitado");          //MARCAR CADA NÓ COMO NÃO VISITADO, MARCANDO COM A "COR BRANCA"
+            n.addAttribute("ui.color", "white");    //DEIXANDO TODOS OS NÓS BRANCOS
         }
         
         for(Node n : G.getEachNode()){ 
@@ -70,8 +78,8 @@ public class TP1_Grafos {
         }
     }
 
-////              POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :/* */
-//            //não sei se entendi muito pra que esse método...
+//          POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :
+//
 //            public int qntdLinhas(String arquivoPath) throws IOException{
 //                
 //                BufferedReader reader = new BufferedReader(new FileReader(arquivoPath));
@@ -118,7 +126,7 @@ public class TP1_Grafos {
                 }
                 
                 
-                Graph FaceGraph = new SingleGraph("Facebook Graph");    //Criei o grafo
+                Graph FaceGraph = new SingleGraph("Facebook Graph");    //INICIANDO O GRAFO
                 
                 for(int i=0; i<qntdVertices; i++){      //Inseri os vértices
                     FaceGraph.addNode(vetorVertices[i]);
@@ -130,7 +138,7 @@ public class TP1_Grafos {
 //                    System.out.println(n.getId());
 //                }
 
-                for(int i=0; i<qntdArestas; i++){       //Inseri arestas
+                for(int i=0; i<qntdArestas; i++){       //INSERINDO ARESTAS
                     String[] parts = vetorArestas[i].split(";");
                     String parte1 = parts[0];
                     String parte2 = parts[1];
@@ -143,11 +151,22 @@ public class TP1_Grafos {
 //                for (Edge e : FaceGraph.getEachEdge()) {
 //                    System.out.println(e.getId());
 //                }
+
+                    String css = "edge .notintree {size:1px;fill-color:red;} " +
+                    "edge .intree {size:3px;fill-color:blue;}";
+
+                    FaceGraph.addAttribute("ui.stylesheet", css);
+                    
+                    for (Node n : FaceGraph){           //TESTE DE COR NOS VÉRTICES
+                        n.addAttribute("ui.color", 0);  //COR: VERDE
+                    }
             
                     System.setProperty("org.graphstream.ui.renderer",
                     "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
                     
                     FaceGraph.display();        //Plotou o grafo
+                    
+                    //Busca(FaceGraph);
                     
                     /*FaceGraph*/
         }
