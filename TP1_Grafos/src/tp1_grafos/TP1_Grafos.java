@@ -34,6 +34,15 @@ public class TP1_Grafos {
         return vetorPreenchido;    
     }
     
+    public static void PintarNo(Node no, String color){
+        no.addAttribute("ui.style", "fill-color: " + color + ";");
+        
+        try{}
+        catch(Exception exc){
+           exc.printStackTrace();
+        }
+    }
+    
  
     public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
         Stack<Node> pilhadeNós = new Stack<>(); 
@@ -69,10 +78,11 @@ public class TP1_Grafos {
         for(Node n : G.getEachNode()){     
             n.setAttribute("NaoVisitado");          //MARCAR CADA NÓ COMO NÃO VISITADO, MARCANDO COM A "COR BRANCA"
             n.addAttribute("ui.color", "white");    //DEIXANDO TODOS OS NÓS BRANCOS
+            PintarNo(n, "white");
         }
         
         for(Node n : G.getEachNode()){ 
-            if(n.hasAttribute("NaoVisitado")){ //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
+            if(n.hasAttribute("NaoVisitado")){      //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
                 BuscaProf(n);
             }
         }
