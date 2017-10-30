@@ -36,9 +36,10 @@ public class TP1_Grafos {
     }
     
     public static void PintarNo(Node no, String color){
-        no.addAttribute("ui.style", "fill-color: " + color + ";");
-        
-        try{}
+ 
+        try{
+            no.addAttribute("ui.style", "fill-color: " + color + ";");
+        }
         catch(Exception exc){
            exc.printStackTrace();
         }
@@ -53,51 +54,91 @@ public class TP1_Grafos {
         }
     }
  
-    public static void BuscaProf(Node Nó, Stack<Node> pilhadeNos, Graph auxiliar, ArrayList<String> repetidos){     //FUNÇÃO PRA FAZER A BUSCA EM PROF 
+    public static void BuscaProf(Node node, Stack<Node> pilhadeNos, Graph auxiliar, ArrayList<String> repetidos){     //FUNÇÃO PRA FAZER A BUSCA EM PROF 
  
-        Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
-        Nó.addAttribute("ui.color", "blue");
-        PintarNo(Nó, "blue");
+        node.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
+        node.addAttribute("ui.color", "blue");        
+        PintarNo(node, "blue");                       //PINTANDO DE AZUL
         
-        pilhadeNos.push(Nó);                        //ADICIONA O NÓ NA PILHA
+        pilhadeNos.push(node);                        //ADICIONA O NÓ NA PILHA
         
-            Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
+            Iterator<Node> nodesAdj = node.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
                 
                 while (nodesAdj.hasNext()) {                            //ENQUANTO TIVER NÓS ADJACENTES...
                     Node ndAdj = nodesAdj.next();                       //A VARIÁVEL NdAdj VAI RECEBENDO OS ADJACENTES DESSE NÓ
                     
-                    if(ndAdj.hasAttribute("NaoVisitado")){          //SE ELE AINDA NÃO FOI VISITADO
-                        ndAdj.getEdgeBetween(Nó).setAttribute("Visitada");
-                        ndAdj.addAttribute("ui.color", "yellow");            //ARESTA VISITADA
-                        PintarEdge(ndAdj.getEdgeBetween(Nó), "yellow");      //PINTA A ARESTA
+                    if(ndAdj.hasAttribute("NaoVisitado") || ndAdj.hasAttribute("ExaminandoAdjacencia")){          //SE ELE AINDA NÃO FOI VISITADO OU NÃO COMPLETOU TODA A LISTA DE ADJACENCIA
+                        ndAdj.getEdgeBetween(node).setAttribute("Visitada");      //MARCA A ARESTA COMO VISITADA
+                        ndAdj.addAttribute("ui.color", "yellow");            
+                        PintarEdge(ndAdj.getEdgeBetween(node), "yellow");      //PINTA A ARESTA
                         
-                        biggerComponent(auxiliar, Nó, ndAdj, repetidos);
+                        biggerComponent(auxiliar, node, ndAdj, repetidos);    //CHAMADA PRA FORMAR UM NOVO GRAFO COM A ÁRVORE
                         
                         BuscaProf(ndAdj, pilhadeNos, auxiliar, repetidos);
                         
                     }
                 }
                 pilhadeNos.pop();
-        Nó.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
-        Nó.addAttribute("ui.color", "black");  //COMO ELE JÁ TÁ PRETO, DEIXEI COMO ROXO
-        PintarNo(Nó, "black");
+        node.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
+        node.addAttribute("ui.color", "black");  //LISTA DE ADJACENCIA TODA VISITADA! 
+        PintarNo(node, "black");
     }
-
-//    public static void BuscaLargura(){        //FUNÇÃO BUSCA EM LARGURA
-//    }
     
-    
-    public static void Busca(Graph G, Graph aux, Stack<Node> pilhadeNos, ArrayList<String> repeated){
+    public static void BuscaP(Graph G, Graph aux, Graph Maior, Stack<Node> pilhadeNos, ArrayList<String> repeated){
+        Maior = new SingleGraph("O maior componente");
         
         for(Node n : G.getEachNode()){     
             n.setAttribute("NaoVisitado");          //MARCAR CADA NÓ COMO NÃO VISITADO, MARCANDO COM A "COR BRANCA"
-            n.addAttribute("ui.color", "red");      //DEIXANDO TODOS OS NÓS BRANCOS
+            n.addAttribute("ui.color", "red");      //DEIXANDO TODOS OS NÓS VERMELHOS
             PintarNo(n, "red");
         }
         
         for(Node n : G.getEachNode()){ 
             if(n.hasAttribute("NaoVisitado")){      //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
+                pilhadeNos.removeAllElements();
                 BuscaProf(n, pilhadeNos, aux, repeated);
+                
+                if(aux.getNodeCount() > Maior.getNodeCount()){      //Na primeira chamada já vai ser maior com certeza. Nas outras irá comparar o componente achado com o anterior. 
+                    
+                    Maior = aux;
+                    aux = new SingleGraph("Grafo Aux");
+                }
+            }
+        }
+    } 
+    
+    
+    
+    public static void BuscaLargura(Node node, Stack<Node> PilhaNo){        //FUNÇÃO BUSCA EM LARGURA
+        node.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
+        node.addAttribute("ui.color", "blue");        
+        PintarNo(node, "blue");                       //PINTANDO DE AZUL
+        
+        int contador = 0;
+        int range = 0;
+        
+        node.addAttribute("comprimento", contador);
+        PilhaNo.addElement(node);
+        
+            while(!PilhaNo.empty()){    //EXECUTA ESSE WHILE ENQUANTO A PILHA NÃO ESVAZIAR
+                
+            }
+        
+    }
+    
+    public static void BuscaL(Graph grafo){        //FUNÇÃO BUSCA EM LARGURA
+        
+        for(Node n : grafo){
+            n.setAttribute("NaoVisitado");
+            n.addAttribute("ui.color", "red");
+            PintarNo(n, "red");
+        }
+        
+        for(Node n : grafo){
+            Stack<Node> PilhaNo = new Stack<>();
+            
+            if(n.hasAttribute("NaoVisitado")){
+                BuscaLargura(n, PilhaNo);
             }
         }
     }
@@ -107,24 +148,30 @@ public class TP1_Grafos {
         Boolean origin = false;
         Boolean destiny = false; 
         
-        for (String nomeNo : repeated){
-            if(nomeNo.equals(alfa.getId())){
+        for (String nomeNo : repeated){     //Para todas as strings dentro da lista de nomes dos vertices
+            if(nomeNo.equals(alfa.getId())){    //Se tiver qualquer um igual, vai receber true e não entra nos proximos ifs
                 origin = true;
             }
             
-            if(nomeNo.equals(omega.getId())){
-                destiny = true;
+            if(nomeNo.equals(omega.getId())){   //Se tiver qualquer um igual, vai receber true e não entra nos proximos ifs
+                destiny = true;     
             }
-            
-            if (origin.equals(false)){
-                
-            }
-            
-            if (destiny.equals(false)){
-                
-            }
-            
         }
+        
+            if (origin.equals(false)){      //Se não tiver nenhum igual ao nó analisado
+                aux.addNode(alfa.getId());  //Adiciona ele ao grafo da arvore
+                repeated.add(alfa.getId());
+            }
+            
+            if (destiny.equals(false)){     //Se não tiver nenhum igual ao nó adjacente
+                aux.addNode(omega.getId());
+                repeated.add(omega.getId());
+            }
+            
+            if(destiny.equals(false) && origin.equals(false)){
+                String nomeEdge = alfa.getId() + ";" + omega.getId();
+                aux.addEdge(nomeEdge, omega, omega);
+            }
         
     }
 
@@ -145,8 +192,8 @@ public class TP1_Grafos {
     
     
         public static void main(String[] args) {
-            Stack<Node> pilhadeNós = new Stack<>(); 
-            ArrayList<String> repeateds = new ArrayList<>();
+            Stack<Node> pilhadeNos = new Stack<>(); 
+            ArrayList<String> repeateds = new ArrayList<>();        //ArrayList para conferir os nós repetidos na hora de formar a árvore
             
             Path EdgePath = Paths.get("src\\ArestasFacebook_20171010214533.txt");
             Path VertexPath = Paths.get("src\\VerticesFacebook_20171010214551.txt");         
@@ -180,8 +227,9 @@ public class TP1_Grafos {
                 }
                 
                 
-                Graph FaceGraph = new SingleGraph("Facebook Graph");    //INICIANDO O GRAFO
-                Graph Auxiliar = new SingleGraph("Aux do BuscaProf");
+                Graph FaceGraph = new SingleGraph("Facebook Graph");    //GRAFO ORIGINAL
+                Graph Auxiliar = new SingleGraph("Aux do BuscaProf");   //ARVORE GERADA NO BUSCAPROF
+                Graph BiggerComponent = null;                           //Grafo do maior componente
                 
                 for(int i=0; i<qntdVertices; i++){      //Inseri os vértices
                     FaceGraph.addNode(vetorVertices[i]);
@@ -216,9 +264,11 @@ public class TP1_Grafos {
                     System.setProperty("org.graphstream.ui.renderer",
                     "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
                     
-                    FaceGraph.display();        //Plotou o grafo
+                    //FaceGraph.display();        //Plotou o grafo original
+                
+                    BuscaP(FaceGraph, BiggerComponent, Auxiliar, pilhadeNos, repeateds);
                     
-                    //Busca(FaceGraph, pilhadeNós);
+                    BiggerComponent.display();
                     
                     /*FaceGraph*/
         }
