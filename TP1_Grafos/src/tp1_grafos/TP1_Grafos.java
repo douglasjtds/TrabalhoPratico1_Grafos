@@ -126,7 +126,7 @@ public class TP1_Grafos {
         PintarNo(node, "blue");                       //PINTANDO DE AZUL
         
         int contador = 0;
-        int range = 0;
+        //int range = 0;
         
         node.addAttribute("comprimento", contador);
         PilhaNo.addElement(node);
@@ -138,7 +138,7 @@ public class TP1_Grafos {
                 
                 Iterator<Node> nodesAdj = aux.getNeighborNodeIterator();
                 
-                    if (nodesAdj.hasNext()) {                    
+                    if (nodesAdj.hasNext()){                    
                        contador = aux.getAttribute("comprimento");
                        contador++;          
                     } else {
@@ -161,12 +161,9 @@ public class TP1_Grafos {
                                     PintarNo(ndAdj, "blue");
                                     PilhaNo.addElement(ndAdj);
                                     
-                                }
-                                
-                            
+                                }               
                         }
             }
-        
     }
     
     public static void BuscaL(Graph grafo){        //FUNÇÃO BUSCA EM LARGURA
@@ -307,9 +304,11 @@ public class TP1_Grafos {
                     System.setProperty("org.graphstream.ui.renderer",
                     "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
                     
-                    //FaceGraph.display();        //Plotou o grafo original
-                
+                    FaceGraph.display();        //Plotou o grafo original
+                    
                     BuscaP(FaceGraph, BiggerComponent, Auxiliar, pilhadeNos, repeateds);
+ //                   
+ //                   BuscaL(BiggerComponent);
                     
                     BiggerComponent.display();      //Plotou a árvore do maior componente
 
