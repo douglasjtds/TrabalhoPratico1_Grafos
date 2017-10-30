@@ -52,15 +52,13 @@ public class TP1_Grafos {
         }
     }
  
-    public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
-        Stack<Node> pilhadeNós = new Stack<>(); 
-        int contador = 0;
-        
+    public static void BuscaProf(Node Nó, Stack pilhadeNos){     //FUNÇÃO PRA FAZER A BUSCA EM PROF 
+ 
         Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
-        Nó.addAttribute("ui.color", "grey");
-        PintarNo(Nó, "grey");
+        Nó.addAttribute("ui.color", "blue");
+        PintarNo(Nó, "blue");
         
-        pilhadeNós.push(Nó);                        //ADICIONA O NÓ NA PILHA
+        pilhadeNos.push(Nó);                        //ADICIONA O NÓ NA PILHA
         
             Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
                 
@@ -69,36 +67,47 @@ public class TP1_Grafos {
                     
                     if(ndAdj.hasAttribute("NaoVisitado")){          //SE ELE AINDA NÃO FOI VISITADO
                         ndAdj.getEdgeBetween(Nó).setAttribute("Visitada");
-                        ndAdj.addAttribute("ui.color", "green");            //ARESTA VISITADA
-                        PintarEdge(ndAdj.getEdgeBetween(Nó), "green");      //PINTA A ARESTA
+                        ndAdj.addAttribute("ui.color", "yellow");            //ARESTA VISITADA
+                        PintarEdge(ndAdj.getEdgeBetween(Nó), "yellow");      //PINTA A ARESTA
                         
-                        BuscaProf(ndAdj);
+                        
+                        
+                        BuscaProf(ndAdj, pilhadeNos);
                         
                     }
-                    pilhadeNós.pop();
                 }
+                pilhadeNos.pop();
         Nó.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
-        Nó.addAttribute("ui.color", "purple");  //COMO ELE JÁ TÁ PRETO, DEIXEI COMO ROXO
-        PintarNo(Nó, "purple");
+        Nó.addAttribute("ui.color", "black");  //COMO ELE JÁ TÁ PRETO, DEIXEI COMO ROXO
+        PintarNo(Nó, "black");
     }
 
 //    public static void BuscaLargura(){        //FUNÇÃO BUSCA EM LARGURA
 //    }
     
     
-    public static void Busca(Graph G){
+    public static void Busca(Graph G, Stack pilhadeNos){
         
         for(Node n : G.getEachNode()){     
             n.setAttribute("NaoVisitado");          //MARCAR CADA NÓ COMO NÃO VISITADO, MARCANDO COM A "COR BRANCA"
-            n.addAttribute("ui.color", "white");    //DEIXANDO TODOS OS NÓS BRANCOS
-            PintarNo(n, "white");
+            n.addAttribute("ui.color", "red");      //DEIXANDO TODOS OS NÓS BRANCOS
+            PintarNo(n, "red");
         }
         
         for(Node n : G.getEachNode()){ 
             if(n.hasAttribute("NaoVisitado")){      //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
-                BuscaProf(n);
+                BuscaProf(n, pilhadeNos);
             }
         }
+    }
+    
+    public static void biggerComponent(){
+        
+        Boolean origin = false;
+        Boolean destiny = false; 
+        
+        
+        
     }
 
 //          POSSÍVEL MÉTODO PRA CONTAR QUANTAS LINHAS TEM O ARQUIVO. TEM QUE MEXER NELA :
@@ -116,6 +125,7 @@ public class TP1_Grafos {
 //            } 
 //        
         public static void main(String[] args) {
+            Stack<Node> pilhadeNós = new Stack<>(); 
             
             Path EdgePath = Paths.get("src\\ArestasFacebook_20171010214533.txt");
             Path VertexPath = Paths.get("src\\VerticesFacebook_20171010214551.txt");         
@@ -189,7 +199,7 @@ public class TP1_Grafos {
                     
                     FaceGraph.display();        //Plotou o grafo
                     
-                    //Busca(FaceGraph);
+                    Busca(FaceGraph, pilhadeNós);
                     
                     /*FaceGraph*/
         }
