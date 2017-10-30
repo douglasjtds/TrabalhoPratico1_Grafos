@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Edge;
@@ -101,7 +102,7 @@ public class TP1_Grafos {
         }
     }
     
-    public static void biggerComponent(){
+    public static void biggerComponent(Graph aux, Node alfa, Node omega, ArrayList<String> repeated){
         
         Boolean origin = false;
         Boolean destiny = false; 
@@ -123,9 +124,12 @@ public class TP1_Grafos {
 //                    
 //                    return lines;
 //            } 
-//        
+    
+    
+    
         public static void main(String[] args) {
             Stack<Node> pilhadeNós = new Stack<>(); 
+            ArrayList<String> repeateds = new ArrayList<>();
             
             Path EdgePath = Paths.get("src\\ArestasFacebook_20171010214533.txt");
             Path VertexPath = Paths.get("src\\VerticesFacebook_20171010214551.txt");         
@@ -160,6 +164,7 @@ public class TP1_Grafos {
                 
                 
                 Graph FaceGraph = new SingleGraph("Facebook Graph");    //INICIANDO O GRAFO
+                Graph Auxiliar = new SingleGraph("Aux do BuscaProf");
                 
                 for(int i=0; i<qntdVertices; i++){      //Inseri os vértices
                     FaceGraph.addNode(vetorVertices[i]);
@@ -189,11 +194,8 @@ public class TP1_Grafos {
                     "edge .intree {size:3px;fill-color:blue;}";
 
                     FaceGraph.addAttribute("ui.stylesheet", css);
-                    
-                    for (Node n : FaceGraph){           //TESTE DE COR NOS VÉRTICES
-                        n.addAttribute("ui.color", 0);  //COR: VERDE
-                    }
-            
+                    Auxiliar.addAttribute("ui.stylesheet", css);
+
                     System.setProperty("org.graphstream.ui.renderer",
                     "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
                     
