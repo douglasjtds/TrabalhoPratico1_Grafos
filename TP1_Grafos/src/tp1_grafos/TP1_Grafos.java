@@ -53,7 +53,7 @@ public class TP1_Grafos {
         }
     }
  
-    public static void BuscaProf(Node Nó, Stack pilhadeNos){     //FUNÇÃO PRA FAZER A BUSCA EM PROF 
+    public static void BuscaProf(Node Nó, Stack<Node> pilhadeNos, Graph auxiliar, ArrayList<String> repetidos){     //FUNÇÃO PRA FAZER A BUSCA EM PROF 
  
         Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
         Nó.addAttribute("ui.color", "blue");
@@ -71,9 +71,9 @@ public class TP1_Grafos {
                         ndAdj.addAttribute("ui.color", "yellow");            //ARESTA VISITADA
                         PintarEdge(ndAdj.getEdgeBetween(Nó), "yellow");      //PINTA A ARESTA
                         
+                        biggerComponent(auxiliar, Nó, ndAdj, repetidos);
                         
-                        
-                        BuscaProf(ndAdj, pilhadeNos);
+                        BuscaProf(ndAdj, pilhadeNos, auxiliar, repetidos);
                         
                     }
                 }
@@ -87,7 +87,7 @@ public class TP1_Grafos {
 //    }
     
     
-    public static void Busca(Graph G, Stack pilhadeNos){
+    public static void Busca(Graph G, Graph aux, Stack<Node> pilhadeNos, ArrayList<String> repeated){
         
         for(Node n : G.getEachNode()){     
             n.setAttribute("NaoVisitado");          //MARCAR CADA NÓ COMO NÃO VISITADO, MARCANDO COM A "COR BRANCA"
@@ -97,17 +97,34 @@ public class TP1_Grafos {
         
         for(Node n : G.getEachNode()){ 
             if(n.hasAttribute("NaoVisitado")){      //SE O VÉRTICE N NÃO TIVER SIDO VISITADO
-                BuscaProf(n, pilhadeNos);
+                BuscaProf(n, pilhadeNos, aux, repeated);
             }
         }
     }
     
-    public static void biggerComponent(Graph aux, Node alfa, Node omega, ArrayList<String> repeated){
+    public static void biggerComponent(Graph aux, Node alfa, Node omega, ArrayList<String> repeated){   //PASSA OS DOIS NODES QUE ESTAVAM SENDO ANALISADOS NO METODO BUSCAPROF
         
         Boolean origin = false;
         Boolean destiny = false; 
         
-        
+        for (String nomeNo : repeated){
+            if(nomeNo.equals(alfa.getId())){
+                origin = true;
+            }
+            
+            if(nomeNo.equals(omega.getId())){
+                destiny = true;
+            }
+            
+            if (origin.equals(false)){
+                
+            }
+            
+            if (destiny.equals(false)){
+                
+            }
+            
+        }
         
     }
 
@@ -201,7 +218,7 @@ public class TP1_Grafos {
                     
                     FaceGraph.display();        //Plotou o grafo
                     
-                    Busca(FaceGraph, pilhadeNós);
+                    //Busca(FaceGraph, pilhadeNós);
                     
                     /*FaceGraph*/
         }
