@@ -18,6 +18,17 @@ import java.util.Stack;
  * @author douglasjtds & yMetsBless
  */
 
+
+
+
+//LEGENDA:
+//AZUL: ANALISANDO ADJACENCIAS
+//VERMELHO: NÃO VISITADO AINDA
+//PRETO: FINALIZADO
+
+
+
+
 public class TP1_Grafos {
     
     public static String[] InicializarArquivo(String caminho, int linhasArquivo) throws IOException{
@@ -67,7 +78,7 @@ public class TP1_Grafos {
                 while (nodesAdj.hasNext()) {                            //ENQUANTO TIVER NÓS ADJACENTES...
                     Node ndAdj = nodesAdj.next();                       //A VARIÁVEL NdAdj VAI RECEBENDO OS ADJACENTES DESSE NÓ
                     
-                    if(ndAdj.hasAttribute("NaoVisitado") || ndAdj.hasAttribute("ExaminandoAdjacencia")){          //SE ELE AINDA NÃO FOI VISITADO OU NÃO COMPLETOU TODA A LISTA DE ADJACENCIA
+                    if(ndAdj.hasAttribute("NaoVisitado")){          //SE ELE AINDA NÃO FOI VISITADO OU NÃO COMPLETOU TODA A LISTA DE ADJACENCIA
                         ndAdj.getEdgeBetween(node).setAttribute("Visitada");      //MARCA A ARESTA COMO VISITADA
                         ndAdj.addAttribute("ui.color", "yellow");            
                         PintarEdge(ndAdj.getEdgeBetween(node), "yellow");      //PINTA A ARESTA
@@ -121,7 +132,39 @@ public class TP1_Grafos {
         PilhaNo.addElement(node);
         
             while(!PilhaNo.empty()){    //EXECUTA ESSE WHILE ENQUANTO A PILHA NÃO ESVAZIAR
+                Node aux = PilhaNo.pop();
+                aux.addAttribute("ui.color", "black");
+                PintarNo(aux, "black");
                 
+                Iterator<Node> nodesAdj = aux.getNeighborNodeIterator();
+                
+                    if (nodesAdj.hasNext()) {                    
+                       contador = aux.getAttribute("comprimento");
+                       contador++;          
+                    } else {
+                        contador = 0;
+                    }
+                   
+                        while(nodesAdj.hasNext()){
+                            Node ndAdj = nodesAdj.next();
+                            
+                                if(ndAdj.hasAttribute("NãoVisitado")){
+                                    ndAdj.setAttribute("ExaminandoAdjacencia");
+                                    ndAdj.addAttribute("ui.color", "blue");
+                                    PintarNo(ndAdj, "blue");
+                                    
+                                    PintarEdge(aux.getEdgeBetween(ndAdj), "yellow");      //PINTA A ARESTA
+                                    
+                                    ndAdj.addAttribute("comprimento", contador);
+                                    
+                                    
+                                    PintarNo(ndAdj, "blue");
+                                    PilhaNo.addElement(ndAdj);
+                                    
+                                }
+                                
+                            
+                        }
             }
         
     }
@@ -268,8 +311,7 @@ public class TP1_Grafos {
                 
                     BuscaP(FaceGraph, BiggerComponent, Auxiliar, pilhadeNos, repeateds);
                     
-                    BiggerComponent.display();
-                    
-                    /*FaceGraph*/
+                    BiggerComponent.display();      //Plotou a árvore do maior componente
+
         }
 }
