@@ -43,6 +43,14 @@ public class TP1_Grafos {
         }
     }
     
+    public static void PintarEdge(Edge Ed, String color){
+        Ed.addAttribute("ui.style", "fill-color: " + color + ";");
+        
+        try{}
+        catch(Exception exc){
+           exc.printStackTrace();
+        }
+    }
  
     public static void BuscaProf(Node Nó){     //FUNÇÃO PRA FAZER A BUSCA EM PROF
         Stack<Node> pilhadeNós = new Stack<>(); 
@@ -50,6 +58,8 @@ public class TP1_Grafos {
         
         Nó.setAttribute("ExaminandoAdjacencia");    //SETANDO O ATRIBUTO PARA "COR CINZA" = ANALISANDO AS ADJECENTES DO NÓ
         Nó.addAttribute("ui.color", "grey");
+        PintarNo(Nó, "grey");
+        
         pilhadeNós.push(Nó);                        //ADICIONA O NÓ NA PILHA
         
             Iterator<Node> nodesAdj = Nó.getNeighborNodeIterator();     //A VARIÁVEL nodesAdj RECEBE TODOS OS NÓS ADJACENTES DO NÓ ANALISADO NO MOMENTO PELO FOREACH
@@ -59,7 +69,9 @@ public class TP1_Grafos {
                     
                     if(ndAdj.hasAttribute("NaoVisitado")){          //SE ELE AINDA NÃO FOI VISITADO
                         ndAdj.getEdgeBetween(Nó).setAttribute("Visitada");
-                        ndAdj.addAttribute("ui.color", "green");    //ARESTA VISITADA
+                        ndAdj.addAttribute("ui.color", "green");            //ARESTA VISITADA
+                        PintarEdge(ndAdj.getEdgeBetween(Nó), "green");      //PINTA A ARESTA
+                        
                         BuscaProf(ndAdj);
                         
                     }
@@ -67,6 +79,7 @@ public class TP1_Grafos {
                 }
         Nó.setAttribute("Visitado");    //MARCOU COM A "COR PRETA"
         Nó.addAttribute("ui.color", "purple");  //COMO ELE JÁ TÁ PRETO, DEIXEI COMO ROXO
+        PintarNo(Nó, "purple");
     }
 
 //    public static void BuscaLargura(){        //FUNÇÃO BUSCA EM LARGURA
