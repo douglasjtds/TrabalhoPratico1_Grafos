@@ -22,12 +22,10 @@ import java.util.Stack;
 
 
 
-
-//LEGENDA:
+                                        //LEGENDA:
 //AZUL: ANALISANDO ADJACENCIAS
 //VERMELHO: NÃO VISITADO AINDA
 //PRETO: FINALIZADO
-
 
 
 
@@ -50,9 +48,10 @@ public class TP1_Grafos {
     
     public static void PintarNo(Node no, String color){
  
-        no.addAttribute("ui.style", "fill-color: " + color + ";");
-        
-        try{}
+
+        try{
+         no.addAttribute("ui.style", "fill-color: " + color + ";");
+        }
         catch(Exception exc){
            exc.printStackTrace();
         }
@@ -60,9 +59,10 @@ public class TP1_Grafos {
     
     public static void PintarEdge(Edge Ed, String color){
     
-        Ed.addAttribute("ui.style", "fill-color: " + color + ";");
-        
-        try{}
+      
+        try{
+            Ed.addAttribute("ui.style", "fill-color: " + color + ";");
+        }
         catch(Exception exc){
            exc.printStackTrace();
         }
@@ -121,7 +121,6 @@ public class TP1_Grafos {
             }
         }
     } 
-    
     
     
     public static void BuscaLargura(Node node, Queue<Node> FilaNo){        //FUNÇÃO BUSCA EM LARGURA
@@ -339,13 +338,15 @@ public class TP1_Grafos {
                         PintarNo(n, "red");
                     }
                     
+                    FaceGraph.display();          //Plotou o grafo original
+                    
 //                    BuscaP(teste, BiggerComponent, Auxiliar, pilhadeNos, repeateds);
-                      FaceGraph.display();          //Plotou o grafo original
-
+                      
+//                      BiggerComponent.display();      //Plotou a árvore do maior componente
           
  //                   BuscaL(BiggerComponent);
                     
-//                    BiggerComponent.display();      //Plotou a árvore do maior componente
+//                    BiggerComponent.display();      //Plotou a árvore do maior BuscaEmLargura
 
         }
 }
